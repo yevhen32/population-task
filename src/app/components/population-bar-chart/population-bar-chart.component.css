@@ -1,0 +1,25 @@
+.bar-chart-males {
+    fill: #add7ff;
+}
+.bar-chart-females {
+    fill: #ffced2;
+}
+.bar-chart-total {
+    fill: #bab8df;
+}
+.pbch-wrapper {
+    position:relative;
+    display:block;
+}
+.pbch-wrapper:after {
+    content:'';
+    display:block;
+    padding-bottom:45.045045%;
+}
+.pbch-wrapper svg {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;;
+}

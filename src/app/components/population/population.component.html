@@ -1,0 +1,20 @@
+<h3 class="mb-4">Population of Slovakia in 1990</h3>
+<div class="loading" *ngIf="isLoading">Loading...</div>
+<table class="table table-hover" *ngIf="population">
+  <thead>
+    <tr>
+      <th scope="col">Age</th>
+      <th scope="col">Males</th>
+      <th scope="col">Females</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of population">
+      <td>{{item.age}}</td>
+      <td>{{item.males}}</td>
+      <td>{{item.females}}</td>
+      <td>{{item.total}}</td>
+    </tr>
+  </tbody>
+</table>
