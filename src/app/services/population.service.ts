@@ -13,7 +13,7 @@ import { Population } from '../models/population';
 
 export class PopulationService {
 
-  private populationUrl = 'http://api.population.io:80/1.0/population/1990/Slovak%20Republic/';  // URL to web api
+  private apiURL: string = 'http://api.population.io:80/1.0/population/1990/Slovak%20Republic/';  // URL to web api
   private log(message: string) {
     this.messagesService.add(`Get Data: ${message}`);
   }
@@ -25,7 +25,7 @@ export class PopulationService {
 
   /** GET list of avaliable population */
   getPopulation(): Observable<Population[]> {
-      return this.http.get<Population[]>(this.populationUrl)
+      return this.http.get<Population[]>(this.apiURL)
         .pipe(
           catchError(this.handleError('getPopulation', []))
         );

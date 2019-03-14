@@ -13,7 +13,7 @@ import { Countries } from '../models/Countries';
 
 export class CountriesService {
 
-  private countriesUrl = 'http://api.population.io:80/1.0/countries';  // URL to web api
+  private apiURL: string = 'http://api.population.io:80/1.0/countries';  // URL to web api
   private log(message: string) {
     this.messagesService.add(`Get Data: ${message}`);
   }
@@ -25,7 +25,7 @@ export class CountriesService {
 
   /** GET list of avaliable countries */
   getCountries(): Observable<Countries[]> {
-      return this.http.get<Countries[]>(this.countriesUrl)
+      return this.http.get<Countries[]>(this.apiURL)
         .pipe(
           catchError(this.handleError('getCountries', []))
         );

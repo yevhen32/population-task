@@ -3,3 +3,29 @@
 .loading {
     color:#999;
 }
+
+/* Fixing bootstrap problem with inline elements and "invalid-feedback" message */
+.form-check-inline.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+/* Handle form validation error messages without bootstrap */
+input.ng-touched.ng-invalid,
+textarea.ng-touched.ng-invalid,
+select.ng-touched.ng-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 .2rem rgba(220,53,69,.25);
+}
+/*
+input[type="checkbox"].ng-touched.ng-invalid,
+input[type="radio"].ng-touched.ng-invalid {
+    box-shadow: none;
+}
+*/
+input.ng-touched.ng-invalid ~ .form-check-label,
+.ng-invalid-feedback {
+    color:#dc3545;
+}
+.ng-invalid-feedback {
+    display: block;
+}

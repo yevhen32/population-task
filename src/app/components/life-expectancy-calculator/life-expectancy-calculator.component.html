@@ -1,46 +1,107 @@
 <div class="jumbotron">
   <h3 class="display-5">Life expactancy calculator</h3>
   <hr class="my-4">
-  <form (ngSubmit)="onSubmit()">
+  <form [formGroup]="calculatorForm" (ngSubmit)="onSubmit()" novalidate>
+    
+    <div *ngIf="success">
+      <h5>Your remaining life expectancy:</h5>
+      <div class="display-2">{{remainingLifeExpectancy.remaining_life_expectancy}}</div>
+      <p class="text-muted">
+        Your data:
+        <em> [
+          sex - {{remainingLifeExpectancy.sex}},
+          country - {{remainingLifeExpectancy.country}},
+          date - {{remainingLifeExpectancy.date}},
+          age - {{remainingLifeExpectancy.age}}
+        ] </em>
+      </p>
+      <hr>
+    </div>
+
     <div class="form-group row">
       <div class="col-sm-2 col-form-label">Sex</div>
       <div class="col-sm-10">
         <div class="col-form-label">
           <div class="form-check form-check-inline mr-4">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-            <label class="form-check-label" for="inlineRadio1">Male</label>
+            <input class="form-check-input" id="fieldSexMale" type="radio" formControlName="sex" value="male">
+            <label class="form-check-label" for="fieldSexMale">Male</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-            <label class="form-check-label" for="inlineRadio2">Female</label>
+            <input class="form-check-input" id="fieldSexFemale" type="radio" formControlName="sex" value="female">
+            <label class="form-check-label" for="fieldSexFemale">Female</label>
+          </div>
+          <!-- Validation error -->
+          <div *ngIf="isControlInvalid('sex')" class="invalid-feedback ng-invalid-feedback">
+              Please provide a valid data.
           </div>
         </div>
       </div>
     </div>
+
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label" for="exampleFormControlSelect1">Country</label>
+      <label class="col-sm-2 col-form-label" for="fieldCountry">Country</label>
       <div class="col-sm-10">
-        <select *ngIf="countries" class="form-control" id="exampleFormControlSelect1">
-          <option *ngFor="let country of countries">{{country}}</option>
+        <select class="form-control" id="fieldCountry" formControlName="country">
+          <ng-template [ngIf]="countries">
+          <option value="" selected>Select country</option>
+          <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+          </ng-template>
         </select>
+        <!-- Validation error -->
+        <div *ngIf="isControlInvalid('country')" class="invalid-feedback ng-invalid-feedback">
+            Please provide a valid data.
+        </div>
       </div>
     </div>
+
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label" for="exampleFormControlInput1">Date</label>
+      <label class="col-sm-2 col-form-label" for="fieldDate">Date</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+        <ngbd-datepicker-popup
+          [id]="'fieldDate'"
+          [minDate]="datepickerConfig.date.minDate"
+          [maxDate]="datepickerConfig.date.maxDate"
+          [parentFormGroup]="calculatorForm"
+          [parentFormControlName]="'date'"
+        ></ngbd-datepicker-popup>
+        <!-- Validation error -->
+        <div *ngIf="isControlInvalid('date')" class="invalid-feedback ng-invalid-feedback">
+            Please provide a valid data.
+        </div>
+        <small class="form-text text-muted">
+          The point in time to calculate the remaining life expectancy at (input range: {{datepickerDateMin | date:"dd-MM-yyyy"}} - {{datepickerDateMax | date:"dd-MM-yyyy"}})
+        </small>
       </div>
     </div>
+
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label" for="exampleFormControlInput2">Age</label>
+      <label class="col-sm-2 col-form-label" for="fieldAge">Age</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="">
+        <input class="form-control" id="fieldAge" formControlName="age" placeholder="##y##m##d">
+        <!--
+        <ngbd-datepicker-popup
+          [id]="'fieldAge'"
+          [minDate]="datepickerConfig.age.minDate"
+          [maxDate]="datepickerConfig.age.maxDate"
+          [parentFormGroup]="calculatorForm"
+          [parentFormControlName]="'age'"
+        ></ngbd-datepicker-popup>
+        -->
+        <!-- Validation error -->
+        <div *ngIf="isControlInvalid('age')" class="invalid-feedback ng-invalid-feedback">
+            Please provide a valid data.
+        </div>
+        <small class="form-text text-muted">
+          Your age at the given point of time in ##y##m##d format, for example: 49y2m12d. Maximum available age - 100 years.
+        </small>
       </div>
     </div>
+
     <div class="form-group row justify-content-end">
       <div class="col-sm-10">
         <button type="submit" class="btn btn-primary">Calculate</button>
       </div>
     </div>
+    
   </form>
 </div>
